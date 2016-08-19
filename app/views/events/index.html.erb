@@ -1,0 +1,79 @@
+<h1>Welcome, <%= @user.first_name %></h1>
+<h3>Here are some of the events at your state:</h3>
+<table>
+	<tr>
+		<th>Name</th>
+		<th>Date</th>
+		<th>Location</th>
+		<th>Host</th>
+		<th>Action/Status</th>
+	</tr>
+	<% if @myEvents %>
+	<% @myEvents.each do |p| %>
+		<tr>
+			<td><a href='/events/<%= p.id %>'><%= p.name %></a></td>
+			<td><%= p.date %></td>
+			<td><%= p.location %></td>
+			<td><% if p.users.first %><%= p.users.first.first_name %> <%= p.users.first.last_name %><% end %></td>
+			<td>
+				<% if p.users.first == @user %>
+					<a href="/events/edit/<%= p.id %>">Edit</a>
+					<a href="/events/delete/<%= p.id %>">Delete</a>
+				<% end %>
+				<% if p.users.find_by(id: session[:user_id]) == nil %>
+					<a href="/events/join/<%= p.id %>">Join</a>
+				<% end %>
+				<% if p.users.find_by(id: session[:user_id]) and p.users.first != @user%>
+					<a href="/events/cancel/<%= p.id %>">Cancel</a>
+				<% end %>
+			</td>
+		</tr>
+	<% end %>
+	<% end %>
+
+</table>
+
+<table>
+	<tr>
+		<th>Name</th>
+		<th>Date</th>
+		<th>Location</th>
+		<th>State</th>
+		<th>Host</th>
+		<th>Action/Status</th>
+	</tr>
+	<% if @outsideEvents %>
+	<% @outsideEvents.each do |p| %>
+		<tr>
+			<td><a href='/events/<%= p.id %>'><%= p.name %></a></td>
+			<td><%= p.date %></td>
+			<td><%= p.location %></td>
+			<td><%= p.state %></td>
+			<td><% if p.users.first %><%= p.users.first.first_name %> <%= p.users.first.last_name %><% end %></td>
+			<td>
+				<% if p.users.first == @user %>
+					<a href="/events/edit/<%= p.id %>">Edit</a>
+					<a href="/events/delete/<%= p.id %>">Delete</a>
+				<% end %>
+				<% if p.users.find_by(id: session[:user_id]) == nil %>
+					<a href="/events/join/<%= p.id %>">Join</a>
+				<% end %>
+				<% if p.users.find_by(id: session[:user_id]) and p.users.first != @user%>
+					<a href="/events/cancel/<%= p.id %>">Cancel</a>
+				<% end %>
+			</td>
+		</tr>
+	<% end %>
+	<% end %>
+
+</table>
+
+<%= form_for :event, url: '/events/create' do |f| %>
+
+	<p>Name: <%= f.text_field :name %></p>
+	<p>Date: <%= f.date_field :date %></p>
+	<p>Location: <%= f.text_field :location %>
+	<%= f.select :state, options_for_select(us_states) %></p>
+	<p><%= f.submit "Add Event" %></p>
+
+<% end %>

@@ -1,0 +1,26 @@
+<h1>Welcome!</h1>
+<div id="register">
+	<h2>Register</h2>
+	<%= form_for :user, url: '/users' do |f| %>
+
+		<p>First Name: <%= f.text_field :first_name %></p>
+		<p>Last Name: <%= f.text_field :last_name %></p>
+		<p>Email: <%= f.text_field :email %></p>
+		<p>Location: <%= f.text_field :location %>
+		<%= f.select :state, options_for_select(us_states) %></p>
+		<p>Password: <%= f.password_field :password %></p>
+		<p>Password Confirmation: <%= f.password_field :password_confirmation %></p>
+		<p><%= f.submit "Submit" %></p>
+
+	<% end %>
+</div>
+<div id="login">
+	<h2>Login</h2>
+	<%= form_tag '/login' do %>
+
+		Email: <%= text_field_tag :email %>
+		Password: <%= password_field_tag :password %>
+		<%= submit_tag "Submit" %>
+
+	<% end %>
+</div>

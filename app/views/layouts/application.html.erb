@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>EventPlanner</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  
+</head>
+<body>
+<div align="right">
+  <% if request.original_fullpath != "/events" %>
+    <a href="/events">Events Dashboard</a>
+  <% end %>
+  <% if request.original_fullpath != "/users/#{session[:user_id]}" %>
+    <a href="/users/<%= session[:user_id] %>">Edit My Profile</a>
+  <% end %>
+  <a href="/logout">Logout</a>
+</div>
+<% if flash[:message] or flash[:error] %>
+	<%= flash[:message] %>
+	<%= flash[:error] %>
+<% end %>
+
+<%= yield %>
+
+</body>
+</html>

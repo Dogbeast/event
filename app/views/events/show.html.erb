@@ -1,0 +1,37 @@
+<div id="left">
+<h1><%= @event.name %></h1>
+<p>Host: <%= @event.users.first.first_name %> <%= @event.users.first.last_name %></p>
+<p>Date: <%= @event.date %></p>
+<p>Location: <%= @event.location %>, <%= @event.state %></p>
+<p>People who are joining the event: <%= @event.users.count %></p>
+<table>
+	<tr>
+		<th>Name</th>
+		<th>Location</th>
+		<th>State</th>
+	</tr>
+	<% @event.users.each do |p| %>
+		<tr>
+			<td><%= p.first_name %> <%= p.last_name %></td>
+			<td><%= p.location %></td>
+			<td><%= p.state %></td>
+		</tr>
+	<% end %>
+</table>
+</div>
+
+<div id="right">
+	<h3>Discussion about the event:</h3>
+	<div id="comments" style='overflow-y:auto; width:300px;height:400px;'>
+		<% @comments.each do |p| %>
+			<p><%= p.comment %></p>
+			~~~~~~~~~~~~~~~~~~~~~~
+		<% end %>
+	</div>
+	<p>Add Comment:</p>
+	<form action="/comment/<%= @event.id %>" method="post">
+		<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+		<input type="text" name="comment">
+		<input type="submit" name="submit" value="Submit Comments">
+	</form>
+</div>

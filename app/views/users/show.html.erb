@@ -1,0 +1,12 @@
+<h1>Edit Your Profile</h1>
+
+<form action="/users/<%= session[:user_id] %>" method="post">
+	<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+	<input type='hidden' name='_method' value='patch'>
+	<p>First Name: <input type="text" name="first_name" value="<%= @user.first_name %>"></p>
+	<p>Last Name: <input type="text" name="last_name" value="<%= @user.last_name %>"></p>
+	<p>Email: <input type="text" name="email" value="<%= @user.email %>"></p>
+	<p>Location: <input type="text" name="location" value="<%= @user.location %>">
+	<%= select_tag :state, options_for_select(us_states) %></p>
+	<p><input type="submit" name="submit" value="Update Records"></p>
+</form>
