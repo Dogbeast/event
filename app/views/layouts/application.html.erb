@@ -9,13 +9,15 @@
 </head>
 <body>
 <div align="right">
-  <% if request.original_fullpath != "/events" %>
-    <a href="/events">Events Dashboard</a>
+  <% if session[:user_id] != nil %>
+    <% if request.original_fullpath != "/events" %>
+      <a href="/events">Events Dashboard</a>
+    <% end %>
+    <% if request.original_fullpath != "/users/#{session[:user_id]}" %>
+      <a href="/users/<%= session[:user_id] %>">Edit My Profile</a>
+    <% end %>
+    <a href="/logout">Logout</a>
   <% end %>
-  <% if request.original_fullpath != "/users/#{session[:user_id]}" %>
-    <a href="/users/<%= session[:user_id] %>">Edit My Profile</a>
-  <% end %>
-  <a href="/logout">Logout</a>
 </div>
 <% if flash[:message] or flash[:error] %>
 	<%= flash[:message] %>
